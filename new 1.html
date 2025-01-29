@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Киберспортивный турнир</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <ul class="nav nav-tabs" id="tournamentTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#groupStage">Групповой этап</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#playoff">Плей-офф</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#schedule">Расписание</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#stats">Статистика игроков</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#teams">Команды</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="groupStage">
+                <h3>Турнирная таблица (Групповой этап)</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Команда</th><th>Игры</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+                    </thead>
+                    <tbody id="groupStageTable"></tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="playoff">
+                <h3>Турнирная сетка (Плей-офф)</h3>
+                <p>Здесь будет турнирная сетка</p>
+            </div>
+            
+            <div class="tab-pane fade" id="schedule">
+                <h3>Расписание матчей</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Дата</th><th>Время</th><th>Команда 1</th><th>Команда 2</th><th>Счет</th></tr>
+                    </thead>
+                    <tbody id="scheduleTable"></tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="stats">
+                <h3>Статистика игроков</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Игрок</th><th>Команда</th><th>Роль</th><th>KDA</th></tr>
+                    </thead>
+                    <tbody id="statsTable"></tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="teams">
+                <h3>Список команд</h3>
+                <div id="teamsList" class="row"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sheetId = 'ВАШ_ID_ТАБЛИЦЫ';
+        const apiKey = 'ВАШ_API_КЛЮЧ';
+        const range = 'Sheet1!A2:E';
+
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
+          .then(response => response.json())
+          .then(data => {
+              let rows = data.values;
+              rows.forEach(row => {
+                  $("#groupStageTable").append(`<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td></tr>`);
+              });
+          });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
