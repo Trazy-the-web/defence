@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Киберспортивный турнир</title>
+    <title>BI Group Cyber Cup</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -32,7 +32,7 @@
                 <h3>Турнирная таблица (Групповой этап)</h3>
                 <table class="table table-bordered">
                     <thead>
-                        <tr><th>Команда</th><th>Игры</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+                        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
                     </thead>
                     <tbody id="groupStageTable"></tbody>
                 </table>
@@ -71,8 +71,8 @@
     </div>
 
     <script>
-        const sheetId = 'ВАШ_ID_ТАБЛИЦЫ';
-        const apiKey = 'ВАШ_API_КЛЮЧ';
+        const sheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+        const apiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
         const range = 'Sheet1!A2:E';
 
         fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
