@@ -6,30 +6,85 @@
     <title>BI Group Cyber Cup</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .bracket {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .round {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            position: relative;
+        }
+        .round h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .match {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: white;
+            font-weight: bold;
+            min-width: 220px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .winner {
+            background-color: gold !important;
+        }
+        .score {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        .champion {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .champion .match {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
         <ul class="nav nav-tabs" id="tournamentTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#groupStage">Групповой этап</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#groupStage" style="font-family: 'Courier New', sans-serif; font-size: 22px; color: black;">Групповой этап</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#playoff">Плей-офф</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#playoff" style="font-family: 'Courier New', sans-serif; font-size: 22px; color: black;">Плей-офф</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#schedule">Расписание</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#schedule" style="font-family: 'Courier New', sans-serif; font-size: 22px; color: black;">Расписание</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#stats">Статистика игроков</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#stats" style="font-family: 'Courier New', sans-serif; font-size: 22px; color: black;">Статистика игроков</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#teams">Команды</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#teams" style="font-family: 'Courier New', sans-serif; font-size: 22px; color: black;">Команды</a>
             </li>
         </ul>
 
         <div class="tab-content mt-3">
             <div class="tab-pane fade show active" id="groupStage">
-                <h3>Турнирная таблица (Групповой этап)</h3>
+                <h3>Турнирная таблица</h3>
                 <table class="table table-bordered">
                     <thead>
                         <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
@@ -39,8 +94,16 @@
             </div>
             
             <div class="tab-pane fade" id="playoff">
-                <h3>Турнирная сетка (Плей-офф)</h3>
-                <p>Здесь будет турнирная сетка</p>
+                <h3>Турнирная сетка</h3>
+                <div class="container mt-5">
+                    <h2 class="text-center">Турнирная сетка</h2>
+                    <div class="bracket" id="tournamentBracket">
+                        <!-- Здесь будет сетка -->
+                    </div>
+                    <div class="champion" id="championContainer">
+                        <!-- Здесь будет победитель -->
+                    </div>
+                </div>
             </div>
             
             <div class="tab-pane fade" id="schedule">
@@ -71,11 +134,12 @@
     </div>
 
     <script>
-        const sheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
-        const apiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
-        const range = 'Sheet1!A2:E';
+        // Скрипт для группового этапа
+        const groupSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+        const groupApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
+        const groupRange = 'Sheet1!A2:E';
 
-        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`)
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${groupSheetId}/values/${groupRange}?key=${groupApiKey}`)
           .then(response => response.json())
           .then(data => {
               let rows = data.values;
@@ -84,7 +148,80 @@
               });
           });
     </script>
-    
+
+    <script>
+        // Скрипт для турнирной сетки
+        const playoffSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+        const playoffApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
+        const playoffRange = 'Sheet2!A2:E';
+
+        async function fetchMatches() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${playoffSheetId}/values/${playoffRange}?key=${playoffApiKey}`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (!data.values) {
+                console.error("Ошибка загрузки данных!");
+                return;
+            }
+
+            const matches = data.values;
+            let rounds = {};
+            let champion = null;
+
+            matches.forEach(match => {
+                const round = match[0];
+                const team1 = match[1] || '???';
+                const team2 = match[2] || '???';
+                const winner = match[3] || '';
+                const wins1 = match[4] ? match[4].split('-')[0] : '0';
+                const wins2 = match[4] ? match[4].split('-')[1] : '0';
+
+                if (round.toLowerCase() === 'финал') {
+                    champion = winner; // Сохраняем победителя финала
+                }
+
+                if (!rounds[round]) {
+                    rounds[round] = [];
+                }
+
+                rounds[round].push({ team1, team2, winner, wins1, wins2 });
+            });
+
+            let bracketHTML = "";
+            Object.keys(rounds).forEach(round => {
+                bracketHTML += `<div class="round"><h4>${round}</h4>`;
+                
+                rounds[round].forEach(match => {
+                    let match1Class = match.team1 === match.winner ? 'match winner' : 'match';
+                    let match2Class = match.team2 === match.winner ? 'match winner' : 'match';
+
+                    bracketHTML += `    
+                        <div class="${match1Class}">
+                            ${match.team1} <span class="score">${match.wins1}</span>
+                        </div>
+                        <div class="${match2Class}">
+                            ${match.team2} <span class="score">${match.wins2}</span>
+                        </div>
+                    `;
+                });
+
+                bracketHTML += `</div>`;
+            });
+
+            document.getElementById("tournamentBracket").innerHTML = bracketHTML;
+
+            // Отображаем победителя
+            if (champion) {
+                document.getElementById("championContainer").innerHTML = `
+                    <div class="match">🏆 Победитель: ${champion} 🏆</div>
+                `;
+            }
+        }
+
+        fetchMatches();
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
