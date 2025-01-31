@@ -2,46 +2,123 @@
 <html>
 
 <head>
-  <!-- Basic -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
+  <meta name="keywords" content="DOTA 2, турнир, киберспорт, DOTA 2 BI CUP" />
+  <meta name="description" content="Официальный сайт турнира DOTA 2 BI CUP. Расписание, команды, результаты и статистика." />
   <meta name="author" content="" />
 
   <title>DOTA 2 BI CUP</title>
 
-  <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
-
-  <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-  <!-- fonts style -->
   <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
-  <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+
+  <style>
+    /* Основной контейнер для турнирной сетки */
+#tournamentBracket {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 80px; /* Увеличиваем расстояние между колонками в два раза */
+  margin-top: 20px;
+}
+
+/* Стиль для каждого раунда */
+.round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px; /* Увеличиваем отступы между раундами */
+}
+
+/* Стиль для таблицы */
+table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  width: 100%; /* Ширина таблицы */
+}
+
+th, td {
+  padding: 30px 45px; /* Увеличиваем размер ячеек в полтора раза */
+  text-align: center;
+  border: 1px solid #ccc;
+  min-width: 200px; /* Увеличиваем минимальную ширину ячеек */
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+/* Стиль для матчей */
+.match {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px; /* Увеличиваем отступы внутри ячеек */
+  margin: 15px 0; /* Увеличиваем вертикальное расстояние между парами */
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+/* Золотой цвет для победителя */
+.match.winner {
+  background-color: #FFD700; /* Золотой цвет */
+  border-color: #FFC107; /* Более темный оттенок золотого */
+  color: #000; /* Черный текст для контраста */
+}
+
+.score {
+  font-weight: bold;
+}
+
+/* Центрирование заголовка раунда */
+.round-header {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px; /* Увеличиваем отступ снизу */
+  font-size: 1.2em; /* Увеличиваем размер шрифта */
+}
+
+/* Контейнер для чемпиона */
+#championContainer {
+  text-align: center;
+  margin-top: 30px; /* Увеличиваем отступ сверху */
+  font-size: 2em; /* Увеличиваем размер шрифта */
+  font-weight: bold;
+  color: #FFD700; /* Золотой цвет для чемпиона */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Стиль для текста "Победитель" */
+#championContainer .match {
+  background-color: transparent;
+  border: none;
+  color: #000; /* Черный цвет для текста "Победитель" */
+  font-size: 1.5em;
+  margin: 0;
+}
+  </style>
 </head>
 
 <body class="sub_page">
   <div class="hero_area">
-    <!-- header section strats -->
     <div class="brand_box">
       <a class="navbar-brand" href="index.html">
-        <span>
-          DOTA 2 BI CUP
-        </span>
+        <span>DOTA 2 BI CUP</span>
       </a>
     </div>
-    <!-- end header section -->
   </div>
-
-  <!-- nav section -->
 
   <section class="nav_section">
     <div class="container">
@@ -60,13 +137,12 @@
                 <li class="nav-item">
                   <a class="nav-link" href="about.html">Групповой этап </a>
                 </li>
-				 <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link" href="testimonial.html">Плей-офф</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="fruit.html">Команды </a>
                 </li>
-               
                 <li class="nav-item">
                   <a class="nav-link" href="contact.html">Расписание</a>
                 </li>
@@ -75,7 +151,9 @@
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
               </form>
             </div>
           </div>
@@ -84,112 +162,105 @@
     </div>
   </section>
 
-  <!-- end nav section -->
-
-
-  <!-- client section -->
-
-  <section class="client_section layout_padding-bottom">
-    <div class="container ">
-      <div class="heading_container">
-        <h2>
-          Организаторы
-        </h2>
-        <hr>
-      </div>
-      <div id="carouselExample2Controls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="client_container layout_padding-top">
-              <div class="img-box">
-                <img src="images/client-img.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Типо Алиман
-                </h5>
-                <p>
-                  <img src="images/left-quote.png" alt="">
-                  <span>
-                    Какой я красивый на фотке,
-                  </span>
-                  <img src="images/right-quote.png" alt=""> <br>
-                  Думает что умный
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="client_container layout_padding-top">
-              <div class="img-box">
-                <img src="images/client-img.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Типо Дамир
-                </h5>
-                <p>
-                  <img src="images/left-quote.png" alt="">
-                  <span>
-                    Lorem ipsum dolor sit amet,
-                  </span>
-                  <img src="images/right-quote.png" alt=""> <br>
-                  я такую хуйню не говорил
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="client_container layout_padding-top">
-              <div class="img-box">
-                <img src="images/client-img.png" alt="">
-              </div>
-              <div class="detail-box">
-                <h5>
-                  Кайсар
-                </h5>
-                <p>
-                  <img src="images/left-quote.png" alt="">
-                  <span>
-                    Lorem ipsum dolor sit amet,
-                  </span>
-                  <img src="images/right-quote.png" alt=""> <br>
-                  это не Кайсар
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExample2Controls" role="button" data-slide="prev">
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExample2Controls" role="button" data-slide="next">
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-
-    </div>
+  <section class="container">
+    <div id="tournamentBracket"></div>
+    <div id="championContainer"></div>
   </section>
 
-  <!-- end client section -->
-
-
-
-
-  <!-- footer section -->
   <section class="container-fluid footer_section">
     <p>
       &copy; <span id="displayYear"></span> All Rights Reserved By
       <a href="https://html.design/">T_razy</a>
     </p>
   </section>
-  <!-- footer section -->
 
+  <script>
+    const playoffSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+    const playoffApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
+    const playoffRange = 'Sheet2!A2:E';
 
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-  <script type="text/javascript" src="js/custom.js"></script>
+    async function fetchMatches() {
+      try {
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${playoffSheetId}/values/${playoffRange}?key=${playoffApiKey}`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error("Ошибка загрузки данных!");
+        }
+        const data = await response.json();
+        console.log(data); // Отладка: выводим данные в консоль
 
+        if (!data.values) {
+          throw new Error("Данные не найдены!");
+        }
+
+        const matches = data.values;
+        let rounds = {};
+        let champion = null;
+
+        matches.forEach(match => {
+          const round = match[0];
+          const team1 = match[1] || '???';
+          const team2 = match[2] || '???';
+          const winner = match[3] || '';
+          const wins1 = match[4] ? match[4].split('-')[0] : '0';
+          const wins2 = match[4] ? match[4].split('-')[1] : '0';
+
+          if (round.toLowerCase() === 'финал') {
+            champion = winner;
+          }
+
+          if (!rounds[round]) {
+            rounds[round] = [];
+          }
+
+          rounds[round].push({ team1, team2, winner, wins1, wins2 });
+        });
+
+        let bracketHTML = "";
+        Object.keys(rounds).forEach(round => {
+          bracketHTML += `<div class="round"><h4 class="round-header">${round}</h4>`;
+          bracketHTML += '<table>';
+          
+
+          rounds[round].forEach(match => {
+            let match1Class = match.team1 === match.winner ? 'match winner' : 'match';
+            let match2Class = match.team2 === match.winner ? 'match winner' : 'match';
+
+            bracketHTML += `    
+              <tr>
+                <td class="${match1Class}">
+                  ${match.team1} <span class="score">${match.wins1}</span>
+                </td>
+                <td class="${match2Class}">
+                  ${match.team2} <span class="score">${match.wins2}</span>
+                </td>
+              </tr>
+            `;
+          });
+          bracketHTML += '</table>';
+          bracketHTML += `</div>`;
+        });
+
+        document.getElementById("tournamentBracket").innerHTML = bracketHTML;
+
+        if (champion) {
+          document.getElementById("championContainer").innerHTML = `
+            <div class="match">🏆 Победитель: ${champion} 🏆</div>
+          `;
+        }
+      } catch (error) {
+        console.error(error);
+        document.getElementById("tournamentBracket").innerHTML = "<p>Ошибка загрузки данных турнира.</p>";
+      }
+    }
+
+    fetchMatches();
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/custom.js"></script>
 </body>
 
 </html>
