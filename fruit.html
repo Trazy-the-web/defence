@@ -42,7 +42,6 @@
   </div>
 
   <!-- nav section -->
-
   <section class="nav_section">
     <div class="container">
       <div class="custom_nav2">
@@ -60,13 +59,12 @@
                 <li class="nav-item">
                   <a class="nav-link" href="about.html">Групповой этап </a>
                 </li>
-				 <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link" href="testimonial.html">Плей-офф</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="fruit.html">Команды </a>
                 </li>
-               
                 <li class="nav-item">
                   <a class="nav-link" href="contact.html">Расписание</a>
                 </li>
@@ -75,7 +73,6 @@
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                
               </form>
             </div>
           </div>
@@ -83,56 +80,25 @@
       </div>
     </div>
   </section>
-
   <!-- end nav section -->
 
   <!-- fruit section -->
-
   <section class="fruit_section layout_padding">
     <div class="container">
       <div class="heading_container">
         <hr>
         <h2>
-          Fresh Fruit
+          Команды
         </h2>
       </div>
-    </div>
-    <div class="container-fluid">
-
-      <div class="fruit_container">
-        <div class="box">
-          <img src="images/f-1.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-2.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-3.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-4.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-5.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-6.jpg" alt="">
-          
-        </div>
+      <!-- Контейнеры для команд -->
+      <div class="row">
+        <div class="col-md-6" id="column1"></div>
+        <div class="col-md-6" id="column2"></div>
       </div>
     </div>
   </section>
-
   <!-- end fruit section -->
-
-
-  
-
 
   <!-- footer section -->
   <section class="container-fluid footer_section">
@@ -143,11 +109,76 @@
   </section>
   <!-- footer section -->
 
+  <script>
+    async function loadTeams() {
+      const sheetId = "12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ";
+      const sheetName = "405937540";
+      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&gid=${sheetName}`;
+
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+
+        const teams = [];
+        json.table.rows.forEach((row, index) => {
+          if (index === 0) return; // Пропускаем заголовок
+
+          const teamData = {
+            number: row.c[0]?.v || `Команда ${index}`,
+            name: row.c[1]?.v || "Без названия",
+            players: [
+              row.c[2]?.v, // Игрок 1 (C)
+              row.c[3]?.v, // Игрок 2 (D)
+              row.c[4]?.v, // Игрок 3 (E)
+              row.c[5]?.v, // Игрок 4 (F)
+              row.c[6]?.v  // Игрок 5 (G)
+            ].filter(player => player) // Убираем пустые значения
+          };
+
+          teams.push(teamData);
+        });
+
+        displayTeams(teams);
+      } catch (error) {
+        console.error("Ошибка:", error);
+      }
+    }
+
+    function displayTeams(teams) {
+      const column1 = document.getElementById("column1");
+      const column2 = document.getElementById("column2");
+
+      teams.forEach((team, index) => {
+        const teamDiv = document.createElement("div");
+        teamDiv.className = "team-card mb-4 p-3 border rounded";
+
+        teamDiv.innerHTML = `
+          <h4 class="text-center mb-3">${team.name}</h4>
+          <div class="d-flex justify-content-around">
+            ${team.players.map(player => `
+              <div class="player text-center">
+                <img src="images/players/${encodeURIComponent(player.trim())}.jpg" 
+                     onerror="this.src='images/players/default.jpg'" 
+                     class="img-thumbnail" 
+                     alt="${player}"
+                     style="width: 80px; height: 80px; object-fit: cover">
+                <div class="mt-2 small">${player}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        (index % 2 === 0 ? column1 : column2).appendChild(teamDiv);
+      });
+    }
+
+    window.onload = loadTeams;
+  </script>
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
   <script type="text/javascript" src="js/custom.js"></script>
-
 </body>
 
 </html>
