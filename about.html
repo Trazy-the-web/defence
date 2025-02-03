@@ -88,35 +88,79 @@
 
   <!-- about section -->
 
-  <section class="about_section layout_padding">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 px-0">
-          <div class="img-box">
-            <img src="images/about-img.jpg" alt="">
-          </div>
-        </div>
-        <div class="col-md-5">
-          <div class="detail-box">
-            <div class="heading_container">
-              <hr>
-              <h2>
-                Наши овощи
-              </h2>
-            </div>
-            <p>
-              Всегда свежие, особенно двое справа
-            </p>
-            <a href="">
-              Купить Аслана
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="container mt-4">
+        
 
-  <!-- end about section -->
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="groupStage">
+                <h3>Турнирная таблица</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+                    </thead>
+                    <tbody id="groupStageTable"></tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="playoff">
+                <h3>Турнирная сетка</h3>
+                <div class="container mt-5">
+                    <h2 class="text-center">Турнирная сетка</h2>
+                    <div class="bracket" id="tournamentBracket">
+                        <!-- Здесь будет сетка -->
+                    </div>
+                    <div class="champion" id="championContainer">
+                        <!-- Здесь будет победитель -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade" id="schedule">
+                <h3>Расписание матчей</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Дата</th><th>Время</th><th>Команда 1</th><th>Команда 2</th><th>Счет</th></tr>
+                    </thead>
+                    <tbody id="scheduleTable"></tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="stats">
+                <h3>Статистика игроков</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr><th>Игрок</th><th>Команда</th><th>Роль</th><th>KDA</th></tr>
+                    </thead>
+                    <tbody id="statsTable"></tbody>
+                </table>
+            </div>
+            
+            <div class="tab-pane fade" id="teams">
+                <h3>Список команд</h3>
+                <div id="teamsList" class="row"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Скрипт для группового этапа
+        const groupSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+        const groupApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
+        const groupRange = 'Групповой этап!A2:F';
+
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${groupSheetId}/values/${groupRange}?key=${groupApiKey}`)
+          .then(response => response.json())
+          .then(data => {
+              let rows = data.values;
+              rows.forEach(row => {
+                  $("#groupStageTable").append(`<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td></tr>`);
+              });
+          });
+    </script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
  
 
