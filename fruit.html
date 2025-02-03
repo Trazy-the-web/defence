@@ -31,7 +31,7 @@
   <style>
     /* Увеличиваем размер столбцов в 1.5 раза */
     .team-card {
-      width: 150%;
+      width: 100%;
       margin: 0 auto;
       padding: 20px;
     }
@@ -47,6 +47,18 @@
     /* Жирный шрифт для названия команды */
     .team-card h4 strong {
       font-weight: bold;
+    }
+
+    /* Раздвигаем колонки команд */
+    .team-columns {
+      display: flex;
+      justify-content: space-between;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    .team-column {
+      width: 48%;
     }
   </style>
 </head>
@@ -115,13 +127,15 @@
         </h2>
       </div>
       <!-- Контейнеры для команд -->
-      <div class="row">
-        <div class="col-md-6" id="column1"></div>
-        <div class="col-md-6" id="column2"></div>
+      <div class="team-columns">
+        <div class="team-column" id="column1"></div>
+        <div class="team-column" id="column2"></div>
       </div>
     </div>
   </section>
   <!-- end fruit section -->
+</body>
+</html>
 
   <!-- footer section -->
   <section class="container-fluid footer_section">
