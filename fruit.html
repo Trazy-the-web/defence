@@ -26,6 +26,29 @@
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+
+  <!-- Дополнительные стили -->
+  <style>
+    /* Увеличиваем размер столбцов в 1.5 раза */
+    .team-card {
+      width: 150%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Увеличиваем фотографии игроков */
+    .player-photo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin: 0 5px;
+    }
+
+    /* Жирный шрифт для названия команды */
+    .team-card h4 strong {
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body class="sub_page">
@@ -154,15 +177,14 @@
         teamDiv.className = "team-card mb-4 p-3 border rounded";
 
         teamDiv.innerHTML = `
-          <h4 class="text-center mb-3">${team.name}</h4>
+          <h4 class="text-center mb-3"><strong>${team.name}</strong></h4>
           <div class="d-flex justify-content-around">
             ${team.players.map(player => `
               <div class="player text-center">
                 <img src="images/players/${encodeURIComponent(player.trim())}.jpg" 
                      onerror="this.src='images/players/default.jpg'" 
-                     class="img-thumbnail" 
-                     alt="${player}"
-                     style="width: 80px; height: 80px; object-fit: cover">
+                     class="img-thumbnail player-photo" 
+                     alt="${player}">
                 <div class="mt-2 small">${player}</div>
               </div>
             `).join('')}
