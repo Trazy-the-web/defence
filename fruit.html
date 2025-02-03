@@ -29,38 +29,54 @@
 
   <!-- Дополнительные стили -->
   <style>
-    /* Увеличиваем размер столбцов в 1.5 раза */
-    .team-card {
-      width: 100%;
-      margin: 0 auto;
-      padding: 20px;
-    }
+  /* Увеличиваем размер столбцов в 1.6 раза */
+  .team-card {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-    /* Увеличиваем фотографии игроков */
-    .player-photo {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      margin: 0 5px;
-    }
+  /* Увеличиваем фотографии игроков */
+  .player-photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin: 0 5px;
+  }
 
-    /* Жирный шрифт для названия команды */
-    .team-card h4 strong {
-      font-weight: bold;
-    }
+  /* Жирный шрифт для названия команды */
+  .team-card h4 strong {
+    font-weight: bold;
+  }
 
-    /* Раздвигаем колонки команд */
-    .team-columns {
-      display: flex;
-      justify-content: space-between;
-      max-width: 90%;
-      margin: 0 auto;
-    }
+  /* Стили для колонок */
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
 
-    .team-column {
-      width: 48%;
-    }
-  </style>
+  .col-md-6 {
+    width: calc(50% * 1.6); /* Увеличиваем ширину на 1.6 раза */
+    box-sizing: border-box;
+    padding: 0 20px;
+  }
+
+  /* Растягиваем левую колонку влево */
+  #column1 {
+    margin-left: -8%; /* Растягиваем колонку влево */
+  }
+
+  /* Растягиваем правую колонку вправо */
+  #column2 {
+    margin-right: -8%; /* Растягиваем колонку вправо */
+  }
+
+  /* Обеспечиваем, чтобы колонки не перекрывались */
+  .col-md-6 {
+    min-width: 0; /* Ожидаем минимальную ширину */
+  }
+</style>
+
 </head>
 
 <body class="sub_page">
@@ -127,15 +143,13 @@
         </h2>
       </div>
       <!-- Контейнеры для команд -->
-      <div class="team-columns">
-        <div class="team-column" id="column1"></div>
-        <div class="team-column" id="column2"></div>
+      <div class="row">
+        <div class="col-md-6" id="column1"></div>
+        <div class="col-md-6" id="column2"></div>
       </div>
     </div>
   </section>
   <!-- end fruit section -->
-</body>
-</html>
 
   <!-- footer section -->
   <section class="container-fluid footer_section">
