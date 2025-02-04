@@ -14,6 +14,69 @@
 
   <title>DOTA 2 BI CUP</title>
 
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            align-items: center;
+        }
+        .crown img {
+            width: 200px;
+            height: auto;
+        }
+        .card {
+            background: #ffffff;
+            border: 2px solid #dcdcdc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            height: 500px;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .player-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .player-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .player-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .stats {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.8;
+        }
+    </style>
   <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
 
@@ -88,45 +151,71 @@
 
   <!-- fruit section -->
 
-  <section class="fruit_section layout_padding">
-    <div class="container">
-      <div class="heading_container">
-        <hr>
-        <h2>
-          MVP
-        </h2>
-      </div>
-    </div>
-    <div class="container-fluid">
+ <div id="container" class="container"></div>
 
-      <div class="fruit_container">
-        <div class="box">
-          <img src="images/f-1.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-2.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-3.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-4.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-5.jpg" alt="">
-          
-        </div>
-        <div class="box">
-          <img src="images/f-6.jpg" alt="">
-          
-        </div>
-      </div>
-    </div>
-  </section>
+    <script>
+        const groupSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+        const groupApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
+        const sheetName = 'MVP';
+
+        async function fetchMVPData() {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${groupSheetId}/values/${sheetName}!A2:E?key=${groupApiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!data.values) {
+                    console.error("Ошибка: Данные отсутствуют!");
+                    return;
+                }
+
+                const titles = ["BEST SUPPORT PLAYER", "MVP", "BEST CORE PLAYER"];
+                const container = document.getElementById("container");
+
+                container.innerHTML = "";
+
+                data.values.forEach((row, index) => {
+                    if (index >= 3) return; // Ограничиваем до 3 игроков
+
+                    const playerName = row[0] || "Unknown Player";
+                    const victories = row[1] || "0";
+                    const kda = row[2] || "0.0";
+                    const fantasyPoints = row[3] || "0";
+                    const winRate = row[4] || "0%";
+
+                    // Загружаем фото из локальной папки /images/
+                    const imageUrl = `/images/player${index + 1}.png`;
+
+                    const cardHTML = `
+                        <div>
+                            <div class="crown">
+                                <img src="/images/crown${index + 1}.png" alt="Crown ${index + 1}">
+                            </div>
+                            <div class="card">
+                                <div class="player-title">${titles[index]}</div>
+                                <img src="${imageUrl}" alt="${playerName}" class="player-photo">
+                                <div class="player-name">${playerName}</div>
+                                <div class="stats">
+                                    <p>Victories: ${victories}</p>
+                                    <p>KDA: ${kda}</p>
+                                    <p>Fantasy Points: ${fantasyPoints}</p>
+                                    <p>Win Rate: ${winRate}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    container.innerHTML += cardHTML;
+                });
+
+            } catch (error) {
+                console.error("Ошибка при загрузке данных: ", error);
+            }
+        }
+
+        fetchMVPData();
+    </script>
 
   <!-- end fruit section -->
 
