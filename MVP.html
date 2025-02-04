@@ -187,20 +187,20 @@
                     const fantasyPoints = row[3] || "0";
                     const winRate = row[4] || "0%";
 
-                    const imageUrl = `/images/player${index + 1}.png`;
-                    const crownUrl = `/images/crown${index + 1}.png`;
+                    const imageUrl = `/images/player${index + 1}.jpg`;
+                    const crownUrl = `/images/crown${index + 1}.jpg`;
 
                     // Проверка на случай отсутствия изображений
                     const playerPhoto = new Image();
                     playerPhoto.src = imageUrl;
                     playerPhoto.onerror = () => {
-                        playerPhoto.src = "/images/default-player.png"; // Заглушка
+                        playerPhoto.src = "/images/default-player.jpg"; // Заглушка
                     };
 
                     const crownImage = new Image();
                     crownImage.src = crownUrl;
                     crownImage.onerror = () => {
-                        crownImage.src = "/images/default-crown.png"; // Заглушка
+                        crownImage.src = "/images/default-crown.jpg"; // Заглушка
                     };
 
                     const cardHTML = `
