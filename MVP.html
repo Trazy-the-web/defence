@@ -8,8 +8,8 @@
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
+  <meta name="keywords" content="DOTA 2, турнир, BI CUP, статистика, команды, расписание" />
+  <meta name="description" content="Официальный сайт турнира DOTA 2 BI CUP. Узнайте расписание, статистику игроков и результаты матчей." />
   <meta name="author" content="" />
 
   <title>DOTA 2 BI CUP</title>
@@ -17,19 +17,27 @@
   <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            text-align: center;
+            background-color: #f4f4f4;
         }
-        .container {
+        .mvp-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 50px;
             align-items: center;
+            padding: 20px;
+        }
+        @media (max-width: 1200px) {
+            .mvp-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .mvp-container {
+                grid-template-columns: 1fr;
+            }
         }
         .crown img {
             width: 200px;
@@ -105,7 +113,6 @@
   </div>
 
   <!-- nav section -->
-
   <section class="nav_section">
     <div class="container">
       <div class="custom_nav2">
@@ -123,13 +130,12 @@
                 <li class="nav-item">
                   <a class="nav-link" href="about.html">Групповой этап </a>
                 </li>
-				 <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link" href="testimonial.html">Плей-офф</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="fruit.html">Команды </a>
                 </li>
-               
                 <li class="nav-item">
                   <a class="nav-link" href="contact.html">Расписание</a>
                 </li>
@@ -137,9 +143,6 @@
                   <a class="nav-link" href="#">Статистика игроков</a>
                 </li>
               </ul>
-              <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                
-              </form>
             </div>
           </div>
         </nav>
@@ -149,11 +152,10 @@
 
   <!-- end nav section -->
 
-  <!-- fruit section -->
+  <!-- MVP section -->
+  <div id="mvp-container" class="mvp-container"></div>
 
- <div id="container" class="container"></div>
-
-    <script>
+  <script>
         const groupSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
         const groupApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
         const sheetName = 'MVP';
@@ -171,30 +173,43 @@
                 }
 
                 const titles = ["BEST SUPPORT PLAYER", "MVP", "BEST CORE PLAYER"];
-                const container = document.getElementById("container");
+                const container = document.getElementById("mvp-container");
 
                 container.innerHTML = "";
 
-                data.values.forEach((row, index) => {
-                    if (index >= 3) return; // Ограничиваем до 3 игроков
+                const players = data.values.slice(0, 3); // Ограничиваем до 3 игроков
 
+                players.forEach((row, index) => {
                     const playerName = row[0] || "Unknown Player";
                     const victories = row[1] || "0";
                     const kda = row[2] || "0.0";
                     const fantasyPoints = row[3] || "0";
                     const winRate = row[4] || "0%";
 
-                    // Загружаем фото из локальной папки /images/
                     const imageUrl = `/images/player${index + 1}.png`;
+                    const crownUrl = `/images/crown${index + 1}.png`;
+
+                    // Проверка на случай отсутствия изображений
+                    const playerPhoto = new Image();
+                    playerPhoto.src = imageUrl;
+                    playerPhoto.onerror = () => {
+                        playerPhoto.src = "/images/default-player.png"; // Заглушка
+                    };
+
+                    const crownImage = new Image();
+                    crownImage.src = crownUrl;
+                    crownImage.onerror = () => {
+                        crownImage.src = "/images/default-crown.png"; // Заглушка
+                    };
 
                     const cardHTML = `
                         <div>
                             <div class="crown">
-                                <img src="/images/crown${index + 1}.png" alt="Crown ${index + 1}">
+                                <img src="${crownImage.src}" alt="Crown ${index + 1}">
                             </div>
                             <div class="card">
                                 <div class="player-title">${titles[index]}</div>
-                                <img src="${imageUrl}" alt="${playerName}" class="player-photo">
+                                <img src="${playerPhoto.src}" alt="${playerName}" class="player-photo">
                                 <div class="player-name">${playerName}</div>
                                 <div class="stats">
                                     <p>Victories: ${victories}</p>
@@ -217,26 +232,20 @@
         fetchMVPData();
     </script>
 
-  <!-- end fruit section -->
-
-
-  
-
+  <!-- end MVP section -->
 
   <!-- footer section -->
   <section class="container-fluid footer_section">
     <p>
       &copy; <span id="displayYear"></span> All Rights Reserved By
-      <a href="https://html.design/">T_razy</a>
+      <a href="https://yourwebsite.com/">Your Website</a>
     </p>
   </section>
   <!-- footer section -->
 
-
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
   <script type="text/javascript" src="js/custom.js"></script>
-
 </body>
 
 </html>
