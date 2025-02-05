@@ -39,18 +39,27 @@
                 grid-template-columns: 1fr;
             }
         }
-		.crown {
-            position: absolute;
-            top: -50px; /* Смещение короны вверх */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10; /* Поверх карточки */
-        }
-        .crown img {
-            width: 200px;
-            height: auto;
-			margin-bottom: -40px;
-        }
+		
+        .card-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crown {
+    position: absolute;
+    top: -40px; /* Разместить корону прямо над карточкой */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; /* Поверх всех элементов */
+    pointer-events: none; /* Корона не мешает кликам */
+}
+
+.crown img {
+    width: 200px;
+    height: auto;
+}
         .card {
             background: #ffffff;
             border: 2px solid #dcdcdc;
