@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 
+<style>
+    .playoff-team { background-color: #90ee90 } /* Зеленый */
+    .eliminated-team { background-color: #DC143C; } /* Красный */
+</style>
 <head>
   <!-- Basic -->
   <meta charset="utf-8" />
@@ -71,11 +75,11 @@
                   <a class="nav-link" href="contact.html">Расписание</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Статистика игроков</a>
+                  <a class="nav-link" href="MVP.html">Статистика игроков</a>
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+                
               </form>
             </div>
           </div>
@@ -93,14 +97,58 @@
 
         <div class="tab-content mt-3">
             <div class="tab-pane fade show active" id="groupStage">
-                <h3>Турнирная таблица</h3>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
-                    </thead>
-                    <tbody id="groupStageTable"></tbody>
-                </table>
-            </div>
+    <h3>Группа A</h3>
+    <table class="table table-bordered">
+    <thead>
+        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+    </thead>
+    <tbody id="groupStageTable1"></tbody>
+</table>
+
+<!-- Таблица 2 -->
+<h3>Группа B</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+    </thead>
+    <tbody id="groupStageTable2"></tbody>
+</table>
+
+<!-- Таблица 3 -->
+<h3>Группа C</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+    </thead>
+    <tbody id="groupStageTable3"></tbody>
+</table>
+
+<!-- Таблица 4 -->
+<h3>Группа D</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+    </thead>
+    <tbody id="groupStageTable4"></tbody>
+</table>
+
+<!-- Таблица 5 -->
+<h3>Группа E</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+    </thead>
+    <tbody id="groupStageTable5"></tbody>
+</table>
+
+<!-- Таблица 6 -->
+<h3>Группа F</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Команда</th><th>Матчи</th><th>Победы</th><th>Поражения</th><th>Очки</th></tr>
+    </thead>
+    <tbody id="groupStageTable6"></tbody>
+</table>
             
             <div class="tab-pane fade" id="playoff">
                 <h3>Турнирная сетка</h3>
@@ -143,21 +191,34 @@
     </div>
 
     <script>
-        // Скрипт для группового этапа
-        const groupSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
-        const groupApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
-        const groupRange = 'Групповой этап!A2:F';
+    const groupSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+    const groupApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
 
-        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${groupSheetId}/values/${groupRange}?key=${groupApiKey}`)
-          .then(response => response.json())
-          .then(data => {
-              let rows = data.values;
-              rows.forEach(row => {
-                  $("#groupStageTable").append(`<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td></tr>`);
-              });
-          });
-    </script>
+    const tableConfigs = [
+        { range: 'Групповой этап!A2:E5', elementId: 'groupStageTable1' },
+        { range: 'Групповой этап!A8:E11', elementId: 'groupStageTable2' },
+        { range: 'Групповой этап!A14:E17', elementId: 'groupStageTable3' },
+        { range: 'Групповой этап!A20:E23', elementId: 'groupStageTable4' },
+        { range: 'Групповой этап!A26:E28', elementId: 'groupStageTable5' },
+        { range: 'Групповой этап!A32:E34', elementId: 'groupStageTable6' }
+    ];
 
+    tableConfigs.forEach(config => {
+        fetch(`https://sheets.googleapis.com/v4/spreadsheets/${groupSheetId}/values/${config.range}?key=${groupApiKey}`)
+            .then(response => response.json())
+            .then(data => {
+                const rows = data.values;
+                let html = '';
+                rows.forEach((row, index) => {
+  let className = index < rows.length - 1 ? 'playoff-team' : 'eliminated-team';
+  html += `<tr class="${className}"><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td></tr>`;
+});
+                document.getElementById(config.elementId).innerHTML = html;
+            });
+    });
+</script>
+
+	
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

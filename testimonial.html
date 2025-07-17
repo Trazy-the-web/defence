@@ -19,94 +19,124 @@
 
   <style>
     /* Основной контейнер для турнирной сетки */
-#tournamentBracket {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 80px; /* Увеличиваем расстояние между колонками в два раза */
-  margin-top: 20px;
-}
+    .bracket-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 80px;
+      margin-top: 20px;
+    }
 
-/* Стиль для каждого раунда */
-.round {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 20px; /* Увеличиваем отступы между раундами */
-}
+    /* Контейнер для каждой сетки (винеры и лузеры) */
+    .bracket-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-/* Стиль для таблицы */
-table {
-  border-collapse: collapse;
-  margin: 10px 0;
-  width: 100%; /* Ширина таблицы */
-}
+    /* Стиль для каждого раунда */
+    .round {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 20px;
+    }
 
-th, td {
-  padding: 30px 45px; /* Увеличиваем размер ячеек в полтора раза */
+    /* Стиль для таблицы */
+    table {
+      border-collapse: collapse;
+      margin: 10px 0;
+      width: 100%;
+      position: relative;
+    }
+
+    th,
+    td {
+      padding: 30px 45px;
+      text-align: center;
+      border: 1px solid #ccc;
+      min-width: 200px;
+      position: relative;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td {
+      background-color: #f9f9f9;
+    }
+
+    /* Стиль для матчей */
+    .match {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+
+    /* Золотой цвет для победителя */
+    .match.winner {
+      background-color: #FFD700;
+      border-color: #FFC107;
+      color: #000;
+    }
+
+    .score {
+      font-weight: bold;
+    }
+
+    /* Центрирование заголовка раунда */
+    .round-header {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+
+    /* Контейнер для чемпиона */
+    #championContainer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 2em;
+      font-weight: bold;
+      color: #FFD700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    /* Стиль для текста "Победитель" */
+    #championContainer .match {
+      background-color: transparent;
+      border: none;
+      color: #000;
+      font-size: 1.5em;
+      margin: 0;
+    }
+
+    /* Стиль для надписи "ELIMINATED" */
+    .eliminated {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 28px;
+      font-weight: bold;
+      color: red;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 1;
+    }
+	h2 {
   text-align: center;
-  border: 1px solid #ccc;
-  min-width: 200px; /* Увеличиваем минимальную ширину ячеек */
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-td {
-  background-color: #f9f9f9;
-}
-
-/* Стиль для матчей */
-.match {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px; /* Увеличиваем отступы внутри ячеек */
-  margin: 15px 0; /* Увеличиваем вертикальное расстояние между парами */
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-}
-
-/* Золотой цвет для победителя */
-.match.winner {
-  background-color: #FFD700; /* Золотой цвет */
-  border-color: #FFC107; /* Более темный оттенок золотого */
-  color: #000; /* Черный текст для контраста */
-}
-
-.score {
-  font-weight: bold;
-}
-
-/* Центрирование заголовка раунда */
-.round-header {
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 20px; /* Увеличиваем отступ снизу */
-  font-size: 1.2em; /* Увеличиваем размер шрифта */
-}
-
-/* Контейнер для чемпиона */
-#championContainer {
-  text-align: center;
-  margin-top: 30px; /* Увеличиваем отступ сверху */
-  font-size: 2em; /* Увеличиваем размер шрифта */
-  font-weight: bold;
-  color: #FFD700; /* Золотой цвет для чемпиона */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-/* Стиль для текста "Победитель" */
-#championContainer .match {
-  background-color: transparent;
-  border: none;
-  color: #000; /* Черный цвет для текста "Победитель" */
-  font-size: 1.5em;
-  margin: 0;
+  font-size: 40px; 
+  font-weight: bold; 
 }
   </style>
 </head>
@@ -151,9 +181,7 @@ td {
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                
-                  <i class="fas fa-search"></i>
-                </button>
+                <i class="fas fa-search"></i>
               </form>
             </div>
           </div>
@@ -161,9 +189,18 @@ td {
       </div>
     </div>
   </section>
-
+<p> </p>
   <section class="container">
-    <div id="tournamentBracket"></div>
+    <h2>Таблица винеров</h2>
+    <div class="bracket-wrapper">
+      <div id="tournamentBracket" class="bracket-container"></div>
+    </div>
+
+    <h2>Таблица лузеров</h2>
+    <div class="bracket-wrapper">
+      <div id="losersBracket" class="bracket-container"></div>
+    </div>
+
     <div id="championContainer"></div>
   </section>
 
@@ -175,82 +212,109 @@ td {
   </section>
 
   <script>
-    const playoffSheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
-    const playoffApiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
-    const playoffRange = 'Плей-офф!A2:E';
+    const sheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ';
+    const apiKey = 'AIzaSyBMVx7zOAhtQwQqHzi5F-9QkyQmFOi1rBI';
+    const winnersRange = 'Плей-офф!A2:E'; // Диапазон для винеров
+    const losersRange = 'Плей-офф!G2:K'; // Диапазон для лузеров
+    const grandFinalRange = 'Плей-офф!M2:Q2'; // Диапазон для гранд-финала
+
+    async function fetchData(range) {
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Ошибка загрузки данных!");
+      const data = await response.json();
+      if (!data.values) throw new Error("Данные не найдены!");
+      return data.values;
+    }
+
+    function renderBracket(data, bracketId, isLosers = false) {
+      let rounds = {};
+
+      data.forEach(match => {
+        const round = match[0];
+        const team1 = match[1] || '???';
+        const team2 = match[2] || '???';
+        const winner = match[3] || '';
+        const wins1 = match[4] ? match[4].split('-')[0] : '0';
+        const wins2 = match[4] ? match[4].split('-')[1] : '0';
+
+        if (!rounds[round]) rounds[round] = [];
+        rounds[round].push({ team1, team2, winner, wins1, wins2 });
+      });
+
+      let bracketHTML = "";
+      Object.keys(rounds).forEach(round => {
+        bracketHTML += `<div class="round"><h4 class="round-header">${round}</h4>`;
+        bracketHTML += '<table>';
+
+        rounds[round].forEach(match => {
+          let match1Class = match.team1 === match.winner ? 'match winner' : 'match';
+          let match2Class = match.team2 === match.winner ? 'match winner' : 'match';
+
+          bracketHTML += `    
+            <tr>
+              <td class="${match1Class}" ${isLosers && match.team1 !== match.winner && match.winner !== 'TBA' ? 'style="position: relative;"' : ''}>
+                ${match.team1} <span class="score">${match.wins1}</span>
+                ${isLosers && match.team1 !== match.winner && match.winner !== 'TBA' ? '<div class="eliminated">ELIMINATED</div>' : ''}
+              </td>
+              <td class="${match2Class}" ${isLosers && match.team2 !== match.winner && match.winner !== 'TBA' ? 'style="position: relative;"' : ''}>
+                ${match.team2} <span class="score">${match.wins2}</span>
+                ${isLosers && match.team2 !== match.winner && match.winner !== 'TBA' ? '<div class="eliminated">ELIMINATED</div>' : ''}
+              </td>
+            </tr>
+          `;
+        });
+        bracketHTML += '</table></div>';
+      });
+
+      document.getElementById(bracketId).innerHTML = bracketHTML;
+    }
 
     async function fetchMatches() {
       try {
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${playoffSheetId}/values/${playoffRange}?key=${playoffApiKey}`;
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Ошибка загрузки данных!");
-        }
-        const data = await response.json();
-        console.log(data); // Отладка: выводим данные в консоль
+        const winnersData = await fetchData(winnersRange);
+        const losersData = await fetchData(losersRange);
+        const grandFinalData = await fetchData(grandFinalRange);
 
-        if (!data.values) {
-          throw new Error("Данные не найдены!");
-        }
+        renderBracket(winnersData, 'tournamentBracket');
+        renderBracket(losersData, 'losersBracket', true);
 
-        const matches = data.values;
-        let rounds = {};
-        let champion = null;
+        // Отображение победителя гранд-финала
+        if (grandFinalData.length > 0) {
+          const grandFinalMatch = grandFinalData[0];
+          const winner = grandFinalMatch[3] || '???';
 
-        matches.forEach(match => {
-          const round = match[0];
-          const team1 = match[1] || '???';
-          const team2 = match[2] || '???';
-          const winner = match[3] || '';
-          const wins1 = match[4] ? match[4].split('-')[0] : '0';
-          const wins2 = match[4] ? match[4].split('-')[1] : '0';
-
-          if (round.toLowerCase() === 'финал') {
-            champion = winner;
-          }
-
-          if (!rounds[round]) {
-            rounds[round] = [];
-          }
-
-          rounds[round].push({ team1, team2, winner, wins1, wins2 });
-        });
-
-        let bracketHTML = "";
-        Object.keys(rounds).forEach(round => {
-          bracketHTML += `<div class="round"><h4 class="round-header">${round}</h4>`;
-          bracketHTML += '<table>';
-          
-
-          rounds[round].forEach(match => {
-            let match1Class = match.team1 === match.winner ? 'match winner' : 'match';
-            let match2Class = match.team2 === match.winner ? 'match winner' : 'match';
-
-            bracketHTML += `    
-              <tr>
-                <td class="${match1Class}">
-                  ${match.team1} <span class="score">${match.wins1}</span>
-                </td>
-                <td class="${match2Class}">
-                  ${match.team2} <span class="score">${match.wins2}</span>
-                </td>
-              </tr>
-            `;
-          });
-          bracketHTML += '</table>';
-          bracketHTML += `</div>`;
-        });
-
-        document.getElementById("tournamentBracket").innerHTML = bracketHTML;
-
-        if (champion) {
           document.getElementById("championContainer").innerHTML = `
-            <div class="match">🏆 Победитель: ${champion} 🏆</div>
+            <div class="match">🏆 Победитель: ${winner} 🏆</div>
           `;
+        }
+
+        // Добавление надписи "ELIMINATED" для проигравшей команды в последней строке сетки винеров
+        const lastWinnersMatch = winnersData[winnersData.length - 1];
+        if (lastWinnersMatch) {
+          const team1 = lastWinnersMatch[1] || '???';
+          const team2 = lastWinnersMatch[2] || '???';
+          const winner = lastWinnersMatch[3] || '';
+
+          const tournamentBracket = document.getElementById("tournamentBracket");
+          const lastMatchCells = tournamentBracket.querySelectorAll(".round:last-child .match");
+
+          lastMatchCells.forEach(cell => {
+            if (cell.textContent.includes(team1) && team1 !== winner && winner !== 'TBA') {
+              cell.style.position = "relative";
+              cell.innerHTML += `<div class="eliminated">ELIMINATED</div>`;
+            }
+            if (cell.textContent.includes(team2) && team2 !== winner && winner !== 'TBA') {
+              cell.style.position = "relative";
+              cell.innerHTML += `<div class="eliminated">ELIMINATED</div>`;
+            }
+          });
         }
       } catch (error) {
         console.error(error);
         document.getElementById("tournamentBracket").innerHTML = "<p>Ошибка загрузки данных турнира.</p>";
+        document.getElementById("losersBracket").innerHTML = "<p>Ошибка загрузки данных лузеров.</p>";
+        document.getElementById("championContainer").innerHTML = "<p>Ошибка загрузки данных гранд-финала.</p>";
       }
     }
 
