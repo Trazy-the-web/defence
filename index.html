@@ -165,29 +165,42 @@
                 Новости
               </h2>
             </div>
-            <div class="news_content">
-              <p>0. Стримы турнира будут доступны на всех популярных платформах. <a href="https://www.twitch.tv/eslcs" target="_blank">Смотреть на Twitch у Жанко</a></p>
-			  <p>1. Dota 2 BI Cup стартует 10 февраля!</p>
-              <p>2. Команды готовы к битве за кубок.</p>
-              <p>3. Патч 7.34b уже в игре, изменения меты ожидаются.</p>
-              <p>4. Лучший игрок прошлого турнира присоединяется к новой команде.</p>
-              <p>5. Стримы турнира будут доступны на всех популярных платформах.</p>
-              <p>6. Поддержите свои любимые команды и игроков!</p>
-              <p>7. Аналитики прогнозируют сюрпризы в плей-офф.</p>
-              <p>8. Победители получат уникальные награды.</p>
-              <p>9. Следите за обновлениями на официальном сайте.</p>
-              <p>10. Турнир обещает быть незабываемым!</p>
-			  <p>11. Аналитики прогнозируют сюрпризы в плей-офф.</p>
-              <p>12. Победители получат уникальные награды.</p>
-              <p>13. Следите за обновлениями на официальном сайте.</p>
-              <p>14. Турнир обещает быть незабываемым!</p>
-			  
+            <div class="news_content" id="news-content">
+              <!-- Новости будут загружены сюда -->
+              <p>Загрузка новостей...</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+  <script>
+    async function loadNews() {
+      const sheetId = '12bJExUSCmVYkPB8zC4IFHeSky_GnYeof04j-h9JVcXQ'; // Замените на ID вашей таблицы
+      const sheetName = "Новости"; // Замените на название листа
+      const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+
+        const news = json.table.rows.map(row => row.c[0]?.v || "").filter(Boolean);
+        const newsContent = document.getElementById("news-content");
+
+        if (news.length > 0) {
+          newsContent.innerHTML = news.map(item => `<p>${item}</p>`).join("");
+        } else {
+          newsContent.innerHTML = "<p>Новостей пока нет.</p>";
+        }
+      } catch (error) {
+        console.error("Ошибка загрузки новостей:", error);
+        document.getElementById("news-content").innerHTML = "<p>Ошибка загрузки новостей.</p>";
+      }
+    }
+
+    window.onload = loadNews;
+  </script>
 
   <style>
     .news_content {
