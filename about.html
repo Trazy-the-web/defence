@@ -206,7 +206,7 @@
                 const rows = data.values;
                 let html = '';
                 rows.forEach((row, index) => {
-  let className = index < rows.length - 8 ? 'playoff-team' : 'eliminated-team';
+  let className = index < 4 ? 'playoff-team' : 'eliminated-team';
   html += `<tr class="${className}"><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td><td>${row[5]}</td><td>${row[6]}</td><td>${row[7]}</td><td>${row[8]}</td><td>${row[9]}</td><td>${row[10]}</td><td>${row[11]}</td><td>${row[12]}</td></tr>`;
 });
                 document.getElementById(config.elementId).innerHTML = html;
